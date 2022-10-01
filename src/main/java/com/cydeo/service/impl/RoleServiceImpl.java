@@ -9,6 +9,8 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 @Service
 public class RoleServiceImpl extends AbstractMapService<RoleDTO, Long> implements RoleService {
+
+    // map from abstract class is applied and saves roles in one map and user will get it's own map
     @Override
     public RoleDTO save(RoleDTO role) {
         return super.save(role.getId(),role);

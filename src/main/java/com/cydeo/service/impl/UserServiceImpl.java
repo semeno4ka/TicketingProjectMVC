@@ -6,8 +6,10 @@ import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-@Service// same as @Component
+@Service// same as @Component but is applied to Service classes (creates beans from the class)
 public class UserServiceImpl extends AbstractMapService<UserDTO,String> implements UserService {
+
+    // map from abstract class is applied and saves roles in one map and user will get it's own map
     @Override
     public UserDTO save(UserDTO user) {
         return super.save(user.getUserName(), user);

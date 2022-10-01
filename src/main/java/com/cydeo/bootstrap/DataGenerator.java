@@ -10,17 +10,15 @@ import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
 @Component
-public class DataGenerator implements CommandLineRunner {// functional interface which gives us one abstract method
+public class DataGenerator implements CommandLineRunner {// functional interface which gives us one abstract method and performs action before anything else runs
 
     private final RoleService roleService;
     private final UserService userService;
-
+// since we use beans (role and user) in another class, thus it needs to be injected inside another bean
     public DataGenerator(RoleService roleService, UserService userService) {
         this.roleService = roleService;
         this.userService = userService;
     }
-
-
 
     @Override
     public void run(String... args) throws Exception {
@@ -32,7 +30,7 @@ public class DataGenerator implements CommandLineRunner {// functional interface
         RoleDTO employeeRole=new RoleDTO(3L,"Employee");
 
         roleService.save(adminRole);
-        roleService.save(managerRole);
+        roleService.save(managerRole); // Map<Long, RoleDTO> map
         roleService.save(employeeRole);
 
         UserDTO user1 = new UserDTO("John", "Kesy",
@@ -52,7 +50,7 @@ public class DataGenerator implements CommandLineRunner {// functional interface
         UserDTO user8 = new UserDTO("Bill",
                 "Matt", "bill@cydeo.com", "Abc4", true, "8881239846", employeeRole, Gender.MALE);
 
-        userService.save(user1);
+        userService.save(user1); // Map<String, UserDTO> map
         userService.save(user2);
         userService.save(user3);
         userService.save(user4);
