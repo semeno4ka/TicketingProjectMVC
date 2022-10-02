@@ -28,12 +28,12 @@ public class UserController {
     model.addAttribute("users", userService.findAll());
     return "/user/create";
         // if you return same view, you have to provide in a method all the attributes required for the html file to show it
-        // whatever view needs(object, lists etc) need to be provided again in a new method
+        // whatever view needs(object, lists ect) need to be provided again in a new method
 }
     @PostMapping ("/create")
     public String insertUser(@ModelAttribute("user")UserDTO user){
         //User object, roles, users
-        userService.save(user);
+        userService.save(user);// only saves, doesnt update
 
         return "redirect:/user/create";//end point when you redirect
     }
@@ -45,7 +45,24 @@ public class UserController {
         // if you do any action that required connection with DB you need to go to service
         model.addAttribute("roles", roleService.findAll());
         model.addAttribute("users", userService.findAll());
-        return "/user/update";
+        return "/user/update"; // we do not redirect to user/create page where the new info can be updated, because in current business logic
+        // in our MAP if the user doesn't exist it adds the user, if the key(username/id) exists, it updated it
+        //However in real app and real DB the business logic with save and update will not be the same, thus we need different html for create and update
+    }
+
+    @PostMapping("/update")
+    public String updateUser(@ModelAttribute("user") UserDTO user){
+        // You can use it without @ModelAttribute just UserDTO user, because Spring can understand that you are working within same form and same objects
+        //Update user Service
+        userService.update(user);
+
+        return "redirect:/user/create";
+    }
+
+    @GetMapping("/delete/{username}")
+    public String deleteUser(@PathVariable("username") String username ){
+        userService.deleteById(username);
+        return "redirect:/user/create";
     }
 
 }

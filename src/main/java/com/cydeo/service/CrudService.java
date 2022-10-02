@@ -10,5 +10,6 @@ public interface CrudService <T,ID> {// We need also to add ID which we don't kn
     T findById(ID id);
     List<T> findAll();
     void deleteById(ID id);
+    void update(T object);
 
 }
