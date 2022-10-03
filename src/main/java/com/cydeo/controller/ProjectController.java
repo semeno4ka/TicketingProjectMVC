@@ -1,6 +1,7 @@
 package com.cydeo.controller;
 
 import com.cydeo.dto.ProjectDTO;
+import com.cydeo.dto.UserDTO;
 import com.cydeo.enums.Status;
 import com.cydeo.service.ProjectService;
 import com.cydeo.service.UserService;
@@ -23,7 +24,7 @@ public class ProjectController {
     public String createProject(Model model) {
         model.addAttribute("project", new ProjectDTO());
         model.addAttribute("projects", projectService.findAll());
-        model.addAttribute("managers", userService.findAll());
+        model.addAttribute("managers", userService.findManagers());
         return "/project/create";
     }
 
@@ -37,6 +38,27 @@ public class ProjectController {
     @GetMapping("/delete/{projectCode}")
     public String deleteProject(@PathVariable("projectCode") String projectCode) {
         projectService.deleteById(projectCode);
+        return "redirect:/project/create";
+    }
+
+    @GetMapping("/complete/{projectCode}")
+    public String completeProject(@PathVariable("projectCode") String projectCode){
+        //if I do smth in controller and need access to DB, I have to ask myself whether I have service to complete it? I need middle layer between controller and service
+   projectService.complete(projectService.findById(projectCode));
+        return "redirect:/project/create";
+    }
+
+    @GetMapping("/update/{projectCode}")
+    public String editProject(@PathVariable("projectCode") String projectCode, Model model){
+        model.addAttribute("project", projectService.findById(projectCode));// to show the project in the form
+        model.addAttribute("projects", projectService.findAll());
+        model.addAttribute("managers", userService.findManagers());
+        return "/project/update";
+    }
+    @PostMapping("/update")
+    public String updateProject(@ModelAttribute("project") ProjectDTO projectDTO){
+        projectService.update(projectDTO);
+
         return "redirect:/project/create";
     }
 }
