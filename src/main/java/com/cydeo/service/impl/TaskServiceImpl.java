@@ -44,9 +44,10 @@ public class TaskServiceImpl extends AbstractMapService<TaskDTO, Long> implement
 
     @Override
     public void update(TaskDTO task) {
+   TaskDTO foundTask = findById(task.getId());//gives the task based on id, temp container for holding info, which is reassignef later
+        task.setTaskStatus(foundTask.getTaskStatus());
+        task.setAssignedDate(foundTask.getAssignedDate());
 
-        if(task.getTaskStatus()==null) task.setTaskStatus(Status.OPEN);
-        if(task.getAssignedDate()==null) task.setAssignedDate(LocalDate.now());
         super.update(task.getId(),task);
     }
 
