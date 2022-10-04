@@ -13,15 +13,16 @@ import java.time.LocalDate;
 @AllArgsConstructor
 @NoArgsConstructor
 
-
 public class TaskDTO {
 
-    private Long id;// create ourselves in order to make tasks unique
-    private ProjectDTO projectDTO;
+
+    private Long id;
+
+    private ProjectDTO project;
     private UserDTO assignedEmployee;
     private String taskSubject;
-    private String taskDetails;
+    private String taskDetail;
     private Status taskStatus;
-    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate assignedDate;
+
 }

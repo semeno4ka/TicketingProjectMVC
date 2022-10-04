@@ -12,6 +12,19 @@ import java.time.LocalDate;
 @AllArgsConstructor
 @NoArgsConstructor
 public class ProjectDTO {
+
+
+    private String projectName;
+    private String projectCode;
+    private UserDTO assignedManager;
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    private LocalDate startDate;
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    private LocalDate endDate;
+    private String projectDetail;
+    private Status projectStatus;
+}
+/*
 // WHATEVER IS NOT STRING REQUIRES CONVERTER
     private String projectName;
     private String projectCode;
@@ -23,4 +36,4 @@ public class ProjectDTO {
     private String projectDetails;
     private Status projectStatus;
 
-}
+ */

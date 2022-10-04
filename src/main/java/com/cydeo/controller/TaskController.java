@@ -1,5 +1,6 @@
 package com.cydeo.controller;
 
+import com.cydeo.dto.ProjectDTO;
 import com.cydeo.dto.TaskDTO;
 import com.cydeo.service.ProjectService;
 import com.cydeo.service.TaskService;
@@ -24,15 +25,26 @@ private final UserService userService;
     @GetMapping("/create")
     public String createTask(Model model){
         model.addAttribute("task", new TaskDTO());
-        model.addAttribute("taskList", taskService.findAll());
+        model.addAttribute("tasks", taskService.findAll());
         model.addAttribute("projects", projectService.findAll());
-        model.addAttribute("users",userService.findAll());
+        model.addAttribute("employees",userService.findEmployees());
         return "/task/create";
     }
 
     @PostMapping("/create")
-    public String insertTask(@ModelAttribute("task") TaskDTO taskDTO){
-    taskService.save(taskDTO);
+    public String insertTask(@ModelAttribute("task") TaskDTO task){
+    taskService.save(task);
         return "redirect:/task/create";
     }
+
+
+    @GetMapping("/delete/{id}")
+    public String deleteTask(@PathVariable("id") Long id) {
+        taskService.deleteById(id);
+        return "redirect:/task/create";
+    }
+
+
+
+
 }
