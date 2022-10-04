@@ -45,6 +45,32 @@ private final UserService userService;
     }
 
 
+    @GetMapping("/update/{taskId}")
+    public String editTask(@PathVariable("taskId") Long taskId, Model model){
+        model.addAttribute("task", taskService.findById(taskId));// to show the project in the form
+        model.addAttribute("tasks", taskService.findAll());
+        model.addAttribute("projects", projectService.findAll());
+        model.addAttribute("employees",userService.findEmployees());
+        return "/task/update";
+    }
 
 
+    @PostMapping("/update/{id}")
+    // if the { name } is exactly the same as the Field name in the TaskDTO class, then it knows, where to pass it implicitly
+    public String updateTask(TaskDTO task){
+        taskService.update(task);
+
+        return "redirect:/task/create";
+    }
 }
+/*
+   @PostMapping("/update/{taskId}")// we need to get ID  from DB
+    // and keep it in browser to reassign it back to user, since there is no field for ID in the form
+    //IN DB we will alswasy capture this ID
+    public String updateTask(@PathVariable("taskId") Long taskId, @ModelAttribute("task") TaskDTO task){
+        task.setId(taskId);
+        taskService.update(task);
+
+        return "redirect:/task/create";
+    }
+ */
