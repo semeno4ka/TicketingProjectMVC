@@ -1,11 +1,19 @@
 package com.cydeo.service.impl;
 
+import com.cydeo.dto.ProjectDTO;
 import com.cydeo.dto.TaskDTO;
+import com.cydeo.dto.UserDTO;
 import com.cydeo.service.TaskService;
+import com.cydeo.service.UserService;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
+@Service
 public class TaskServiceImpl extends AbstractMapService<TaskDTO, Long> implements TaskService {
+
+
 
     @Override
     public TaskDTO save(TaskDTO task) {
@@ -31,4 +39,6 @@ public class TaskServiceImpl extends AbstractMapService<TaskDTO, Long> implement
     public void update(TaskDTO task) {
         super.update(task.getId(),task);
     }
+
+
 }
