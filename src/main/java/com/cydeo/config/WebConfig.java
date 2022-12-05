@@ -12,7 +12,6 @@ public class WebConfig implements WebMvcConfigurer {
         registry.addViewController("/welcome").setViewName("welcome");// static pages not requesting any data
         registry.addViewController("/login").setViewName("login");// for view only, no model to pass
         registry.addViewController("/").setViewName("login");
-
     }
 
 }
